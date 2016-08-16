@@ -21,6 +21,10 @@ docker push kelseyhightower/lobsters:1.0.0
 ## kelseyhightower/lobsters:1.1.0
 
 ```
+cp custom.css lobsters/app/assets/stylesheets/local
+```
+
+```
 docker build -t kelseyhightower/lobsters:1.1.0 lobsters
 ```
 

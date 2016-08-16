@@ -4,3 +4,5 @@ kubectl delete deployments mysql lobsters
 kubectl delete services mysql lobsters
 kubectl delete jobs lobsters-db-schema-load lobsters-db-seed 
 kubectl delete secrets lobsters
+kubectl delete pv mysql
+kubectl delete pvc mysql

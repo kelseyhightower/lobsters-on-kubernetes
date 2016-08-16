@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+      name: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6.32
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lobsters
+                  key: root-password
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lobsters
+                  key: mysql-password
+            - name: MYSQL_USER
+              value: lobsters
+            - name: MYSQL_DATABASE
+              value: lobsters
+          ports:
+            - name: mysql
+              containerPort: 3306
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql
+      volumes:
+        - name: "mysql"
+          persistentVolumeClaim:
+            claimName: mysql

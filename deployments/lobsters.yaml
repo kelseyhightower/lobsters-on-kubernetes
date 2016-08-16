@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: lobsters
+  name: lobsters
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: lobsters
+    spec:
+      containers:
+        - name: lobsters
+          image: kelseyhightower/lobsters:testing
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lobsters
+                  key: database-url
+          ports:
+            - containerPort: 3000
+              protocol: TCP

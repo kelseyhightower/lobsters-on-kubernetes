@@ -5,7 +5,7 @@ metadata:
     app: lobsters
   name: lobsters
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -13,8 +13,7 @@ spec:
     spec:
       containers:
         - name: lobsters
-          image: kelseyhightower/lobsters:testing
-          imagePullPolicy: Always
+          image: kelseyhightower/lobsters:2.0.0
           env:
             - name: DATABASE_URL
               valueFrom:

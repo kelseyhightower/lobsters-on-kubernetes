@@ -1,4 +1,4 @@
-# Lobsters Docker Image
+# Lobsters Docker Images
 
 ## kelseyhightower/lobsters:1.0.0
 

@@ -7,7 +7,7 @@ git clone https://github.com/kelseyhightower/lobsters.git
 ```
 
 ```
-cp Dockerfile lobsters
+cp lobsters-on-kubernetes/Dockerfile lobsters/
 ```
 
 ```
@@ -21,7 +21,7 @@ docker push kelseyhightower/lobsters:2.0.0
 ## kelseyhightower/lobsters:2.0.1
 
 ```
-cp custom.css lobsters/app/assets/stylesheets/local
+cp lobsters-on-kubernetes/custom.css lobsters/app/assets/stylesheets/local
 ```
 
 ```

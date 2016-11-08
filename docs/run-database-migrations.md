@@ -1,9 +1,9 @@
 # Run Database Migrations
 
 ```
-kubectl create -f jobs/lobsters-db-schema-load.yaml
+kubectl create -f lobsters-on-kubernetes/jobs/lobsters-db-schema-load.yaml
 ```
 
 ```
-kubectl create -f jobs/lobsters-db-seed.yaml
+kubectl create -f lobsters-on-kubernetes/jobs/lobsters-db-seed.yaml
 ```

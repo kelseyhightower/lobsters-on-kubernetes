@@ -1,0 +1,7 @@
+apiVersion: extensionts/v1beta1
+kind: ThirdPartyResource
+description: "A specification of a Let's Encrypt Certificate to do"
+metadata:
+   name: certificate.stable.mydomain.com
+versions:
+   -name: v1

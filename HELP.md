@@ -48,15 +48,61 @@ kubectl get pods
 kubectl get svc
 kubectl describe svc lobsters
 kubectl get pods
-kubectl logs <get-pod-name> -f
+kubectl logs <lobsters-<id>> -f
 
 # Create a new Container, update it, marketing, change color
 vim deployments/lobsters.yaml
 kubectl apply -f deployments/lobsters.yaml              # send to cluster
 watch kubectl get pods
 
+# How to do HTTPS, let's encrypt  --> custome extensios
+vim extensions/certificate.yaml
+kubectl create -f extensions/certificate.yaml
+# kubernetes create REST endpoind, storege in it's backend a manage it
+cat deployments/lobsters-nginx.yaml
+   # configmap: name: nginx
+cat configs/lobsters.conf
+   # nginx.conf file
+kubectl create configmap nginx --from-file configs/lobsters.yaml
+   # now we have this config map in the system
+kubectl get configmaps
 
-
+# Create Secrets
+cat deployments/kube-cert-manager.yaml
+kubectl create -f deployments/kube-cert-manager.yaml
+kubectl get pods
+vim certificates/lobsters.yaml
+kubectl get pods
+# make sure there is no issue
+kubectl describe pods <kube-cert-manager-<id>>
+# at this point it was scheduled > now is creating volume ...
+# submit the job
+kubectl create -f certificates/lobsters.yaml
+kubectl get pods
+kubectl logs <kube-cert-manager-<id>> -c kube-cert-manager -f
+  # -c --> multiple containters in the pod
+  # live demo with DNS if i receive
+  #   _acme-challenge.labsters.mydomain.com. DNS propagation complete
+  #   lobsters.mydomain.com secret missing
+  #   lobsters.mydomain.com secret created
+  #   Watching for certificate events
+  #   Starting reconciliation loop.  Ouu Snaap!
+  #      at this poin we have the same interface for requesting certificate
+  #      that we have for everything else in kubernetes
+  #      -> if working we say
+kubectl get secrets
+  # we should see one for lobsters.mydomain.com
+kubectl delete secrets lobsters.mydomain.com
+  # it's declarated system we don't delete this certificate object we only
+  #   deleting the secrets on this or inside the kubernetes
+watch kubectl get secrets
+  # in the log we can see new secrets, change is done online
+vim deployments/lobsters-secure.yaml
+kubectl apply -f deployments/lobsters-secure.yaml
+kubectl get pods
+  # doing now rolling update because the definition changed
+  # if ok just ceck if still valid
+kubectl get svc
 
 #------------------------------------------------------------------------------
 # CMDS

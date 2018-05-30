@@ -1,7 +1,4 @@
-kubectl create secret generic nginx --from-file nginx.conf
-kubectl create -f deploy
-
-# https://kubernetes.io/docs/getting-started-guides/fedora/fedora_manual_config/
+#!/bin/bash
 
 # Start the services on master
 for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler; do
@@ -9,7 +6,6 @@ for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler; do
     systemctl enable $SERVICES
     systemctl status $SERVICES
 done
-
 
 # Start the services on the node (fed-node)
 for SERVICES in kube-proxy kubelet docker; do

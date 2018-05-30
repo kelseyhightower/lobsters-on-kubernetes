@@ -19,6 +19,38 @@ done
 #------------------------------------------------------------------------------
 #  Step by step
 #------------------------------------------------------------------------------
+# Docker Image 2.0.0
+git clone https://github.com/kelseyhightower/lobsters.git
+cp Dockerfile lobsters
+docker build -t kelseyhightower/lobsters:2.0.0 lobsters
+docker push kelseyhightower/lobsters:2.0.0
+# Docker Image 2.0.1
+cp custom.css lobsters/app/assets/stylesheets/local
+docker build -t kelseyhightower/lobsters:2.0.1 lobsters
+docker push kelseyhightower/lobsters:2.0.1
+
+docker images
+
+#Create Google Persistent Disk
+gcloud compute disks create mysql
+   #NAME        ZONE        SIZE_GB  TYPE         STATUS
+   #mysql       us-west1-b  500      pd-standard  READY
+#Create mysql PersistentVolume
+kubectl create -f pv/mysql.yaml
+   # persistentvolume "mysql" created
+# Create mysql PersistentVolumeClaim
+kubectl create -f pvc/mysql.yaml
+   # persistentvolumeclaim "mysql" created
+# Create mysql Secrets
+kubectl create secret generic lobsters \
+  --from-literal=root-password=l0bst3rs \
+  --from-literal=mysql-password=lobsters \
+  --from-literal='database-url=mysql2://lobsters:lobsters@mysql:3306/lobsters'
+#secret "lobsters" created
+
+# Secrets and ConfigMaps
+kubectl create secret generic nginx --from-file nginx.conf
+
 # MySQL
 kubectl create -f deployments/mysql.yaml
 kubectl get pods
@@ -29,6 +61,9 @@ kubectl get svc
 kubectl get pods                # at this point mysql is running on ip
 
 # Web App
+# Create Lobsters service
+kubectl create -f services/lobsters.yaml
+# Create Lobsters Deployment
 cat deployments/lobsters.yaml
 kubectl get secrets             # lobsters with type Opague -> with all secrets
 kubectl create -f deployments/lobsters.yaml
@@ -54,6 +89,9 @@ kubectl logs <lobsters-<id>> -f
 vim deployments/lobsters.yaml
 kubectl apply -f deployments/lobsters.yaml              # send to cluster
 watch kubectl get pods
+
+# Rolling update
+#kubectl set image deployment lobsters lobsters=kelseyhightower/lobsters:1.1.0
 
 # How to do HTTPS, let's encrypt  --> custome extensios
 vim extensions/certificate.yaml

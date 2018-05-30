@@ -41,7 +41,21 @@ watch kubectl get jobs
 cat jobs/lobsters-db-seed.yaml
 kubectl create -f jobs/lobsters-db-seed.yaml
 watch kubectl get jobs
-# login to web
+# now able to login to web
+
+# Make Replica
+kubectl get pods
+kubectl get svc
+kubectl describe svc lobsters
+kubectl get pods
+kubectl logs <get-pod-name> -f
+
+# Create a new Container, update it, marketing, change color
+vim deployments/lobsters.yaml
+kubectl apply -f deployments/lobsters.yaml              # send to cluster
+watch kubectl get pods
+
+
 
 
 #------------------------------------------------------------------------------

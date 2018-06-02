@@ -1,0 +1,13 @@
+#apiVersion: stable.hightower.com/v1
+apiVersion: stable.mydomain.com/v1
+kind: Certificate
+metadata:
+  name: lobsters
+spec:
+  # my real domain
+  domain: lobsters.mydomain.com
+  email: rudolf.vavra@gmail.com
+  provider: googledns
+  secret: mydomain
+  #secret: hightowerlabs
+  secretKey: service-account.json

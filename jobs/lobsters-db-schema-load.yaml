@@ -25,4 +25,11 @@ spec:
           command:
             - "/usr/local/bundle/bin/rake"
             - "db:schema:load"
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 100M
+            limits:
+              cpu: 0.5
+              memory: 200M
       restartPolicy: Never
